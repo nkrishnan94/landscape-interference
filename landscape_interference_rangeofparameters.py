@@ -14,8 +14,8 @@ import matplotlib.pyplot as plt
 import pylab
 import os
 
-dir_path = os.path.dirname(os.path.realpath('landscape_inference_parameters.py'))
-runfile('simulation.py', dir_path)
+dir_path = os.path.dirname(os.path.realpath('landscape_interference_rangeofparameters.py'))
+runfile('landscape_interference_model.py', dir_path)
 
 #parameter ranges
 mut_min=.1
