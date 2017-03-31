@@ -17,7 +17,7 @@ N = 2 #Genotype length
 cc = 10**3 #carrying capacity
 death_prob = 0.15 #probability of death per timestep.
 mutation_prob = 10**-2
-T_max = 1000
+T_max = 50
 drug_conc = 0
 
 # reproduction probability
@@ -81,8 +81,8 @@ def update(pop, g_index, drug_conc):
 	return pop
 
 
-iterations_per_parameter_set = 1
-coarseness = 10
+iterations_per_parameter_set = 500
+coarseness = 2
 count = 0
 #this makes the REAL NARA
 newthing = np.empty((coarseness**(2**N), iterations_per_parameter_set, 2**N))
@@ -91,36 +91,40 @@ a = [range(0,coarseness)]*(2**N)
 iterator = tuple(itertools.product(*a))
 ref_vec  = np.arange(1,coarseness+1)/coarseness
 ref_vec = ref_vec.tolist()
-# print(type(ref_vec))
-# print(ref_vec)
+params = []
+
 for thing1 in iterator:
-	landscape = [ref_vec[thing1[0]], ref_vec[thing1[1]], ref_vec[thing1[2]], ref_vec[thing1[3]]]
+    landscape = [ref_vec[thing1[0]], ref_vec[thing1[1]], ref_vec[thing1[2]], ref_vec[thing1[3]]]
+    #save params
+    params.append(landscape)
 
-	for j in range(iterations_per_parameter_set):
 
-		population = [0 for i in range(2**N)]
-		population[0] = 10
-		life_history = [population]
+    for j in range(iterations_per_parameter_set):
 
-		t = 0
-		while t < T_max:
-			# print t
-			#plt.clf()
-			new_pop = copy(population)
-			count_list = copy(population)
-			while sum(count_list)!=0:
-				g_index = choose_random(count_list)
-				count_list[g_index]-=1
-				new_pop = update(new_pop, g_index, drug_conc)
-			life_history.append(population)
+        population = [0 for i in range(2**N)]
+        population[0] = 10
+        life_history = [population]
 
-			t += 1
-			population = copy(new_pop)
+        t = 0
+        while t < T_max:
+            # print t
+            #plt.clf()
+            new_pop = copy(population)
+            count_list = copy(population)
+            while sum(count_list)!=0:
+                g_index = choose_random(count_list)
+                count_list[g_index]-=1
+                new_pop = update(new_pop, g_index, drug_conc)
+            life_history.append(population)
 
-			pop = life_history[-1]
+            t += 1
+            population = copy(new_pop)
 
-		newthing[count,j,:] = pop
-	count += 1				
+            pop = life_history[-1]
+
+        newthing[count,j,:] = pop
+    count += 1				
 					
 np.save('THENEWTHING.npy', newthing)
+np.save('params.npy',params)
 
