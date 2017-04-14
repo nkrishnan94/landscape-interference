@@ -22,10 +22,10 @@ from random import choice
 p_divide = 1.0 #Probability to divide per time-step (time-step = 30mins, typical doubling time.)
 N = 2 #Genotype length
 cc = 10**3 #carrying capacity
-death_prob = 0.15 #probability of death per timestep.
+death_prob =.15 #probability of death per timestep.
 mutation_prob = 10**-2
-T_max = 50
-drug_conc = 0
+T_max = 100
+drug_conc = .3
 
 # reproduction probability
 def get_p_divide(MIC, drug_conc):
@@ -68,7 +68,7 @@ def oneStepNeighbours(genotype):
 
 	#============================== Landscapes ==============================#
 
-NARA = [0.5, 1, 1, .5]
+NARA = [1, 1, 1, 1]
 
 #AMP = [1.851, 2.082, 1.948, 2.434, 2.024, 2.198, 2.033, 0.034, 1.57, 2.165, 0.051, 0.083, 2.186, 2.322, 0.088, 2.821]
 # AM  = [1.778, 1.782, 2.042, 1.752, 1.448, 1.544, 1.184, 0.063, 1.72, 2.008, 1.799, 2.005, 1.557, 2.247, 1.768, 2.047]
@@ -137,7 +137,7 @@ def update(pop, g_index, drug_conc):
 #this makes the REAL NARA
 histories = []
 
-for j in range(1000):
+for j in range(100):
 	#Recording information
 	population = [0 for i in range(2**N)]
 	population[0]=10

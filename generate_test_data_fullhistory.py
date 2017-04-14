@@ -24,8 +24,8 @@ N = 2 #Genotype length
 cc = 10**3 #carrying capacity
 death_prob = 0.15 #probability of death per timestep.
 mutation_prob = 10**-2
-T_max = 50
-drug_conc = 0
+T_max = 100
+drug_conc = .3
 
 # reproduction probability
 def get_p_divide(MIC, drug_conc):
@@ -88,8 +88,8 @@ def update(pop, g_index, drug_conc):
 	return pop
 
 
-iterations_per_parameter_set = 10
-coarseness = 5
+iterations_per_parameter_set = 100
+coarseness = 2
 count = 0
 #this makes the REAL NARA
 newthing = np.empty((coarseness**(2**N), iterations_per_parameter_set, T_max+1,2**N))
